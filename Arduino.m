@@ -89,6 +89,12 @@ v=[str2num(get(handles.text,'String'))];
 
 for k=1:1:v
     b=readVoltage(a, 'A0');
+    if b<1 % Se tensão em cima do fotoresistor for menor que 1V ligar luz de emergência.
+        writeDigitalPin(a,'D8',1); %Liga luz de emergência atravez do módulo relé.
+    end
+    if b>=1 % Se tensão em cima do fotoresistor for maior ou igual a 1V desligar luz de emergência.
+        writeDigitalPin(a,'D8',0); %Desliga luz de emergência atravez do módulo relé.
+    end
     x=[x,b];
     subplot(311);
     plot(x,'LineWidth',2); grid on;
